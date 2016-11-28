@@ -8,7 +8,7 @@ class Data:
 
     def sample(self, quantity):
         batch = {'inputs':None, 'labels':None}
-        batch['inputs'] = np.random.random_sample(quantity)
+        batch['inputs'] = np.random.random_sample(quantity).reshape(quantity,1)
         batch['labels'] = np.exp(batch['inputs'])
         return batch
 
