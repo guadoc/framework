@@ -1,17 +1,14 @@
 import tensorflow as tf
+#from models.baseline import create_model
 
 class Model(object):
-    def __init__(self):
+    def __init__(self, opts):
+        model_path = "models."+opts.model
+        module = __import__(model_path)
+
+        create_model = __import__("create_model")
         self.sess = tf.InteractiveSession()
         self.inputs = tf.placeholder(tf.float32, shape=[None, 1])
         self.labels = tf.placeholder(tf.float32, shape=[None, 1])
-        W1 = tf.Variable(tf.zeros([1,100]))
-        b1 = tf.Variable(tf.zeros([100]))
-
-        h_fc1 = tf.nn.relu(tf.matmul(self.inputs, W1) + b1)
-
-        W2 = tf.Variable(tf.zeros([100,1]))
-        b2 = tf.Variable(tf.zeros([1]))
-
-        self.outputs = tf.matmul(h_fc1, W2) + b2
-        self.sess.run(tf.initialize_all_variables())
+        self.outputs = create_model(self)
+        self.sess.run(tf.global_variables_initializer())
