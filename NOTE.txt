@@ -1,0 +1,5 @@
+- queue for data loading
+- model input, labels into model files
+- don't run eval twice during learning
+- save the network
+- manage the validation (epoch ? avg batch ?)
