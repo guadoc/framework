@@ -1,9 +1,12 @@
 import argparse
 def init_config():
     parser = argparse.ArgumentParser(description='Framework for machine learning with Tensor Flow', formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('-mp', '--model_path', default='models', help='model folder, must contain __init__ file')
-    #parser.add_argument('-c', '--checkpoint', action='store_true', help='enable interaction after each training epoch')
-    parser.add_argument('-m', '--model', default='baseline', help='model file')
+    parser.add_argument('-mp', '--model_path'     , default='models',   help='model folder, must contain __init__ file')
+    parser.add_argument('-m', '--model'           , default='baseline', help='model file')
+    parser.add_argument('-le', '--last_epoch'     , default=0,          help='last epoch, must load epoch model')
+    parser.add_argument('-ne', '--n_epoch'        , default=100,        help='total number of epoch')
+    parser.add_argument('-bs', '--batch_size'     , default=5,          help='number of exemple per batch')
+    parser.add_argument('-chkp', '--checkpoint'   , default=10,         help='number of exemple per batch')
     #parser.add_argument('-o', '--output-mode', action='store_true', help='enter describe mode')
     #parser.add_argument('-op', '--optimizer', default=1, metavar='I', type=int, nargs='?', help='1 = ADAM, 2 = Nesterov')
     #parser.add_argument('-bs', '--batch-size', default=10, metavar='I', type=int, nargs='?', help='number of images per batch')

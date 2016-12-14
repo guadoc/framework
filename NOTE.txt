@@ -1,5 +1,7 @@
 - queue for data loading
 - model input, labels into model files
 - don't run eval twice during learning
-- save the network
+- save the network and reload it
 - manage the validation (epoch ? avg batch ?)
+
+- ask thomas for the monitor variable / Log

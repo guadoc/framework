@@ -1,18 +1,11 @@
-import numpy as np
-import matplotlib.pyplot as plt
+from pylab import *
+import time
 
-x = np.arange(0, 10, 0.1)
-y = np.sin(x)
+ion()
 
-plt.ion()
-ax = plt.gca()
-ax.set_autoscale_on(True)
-line, = ax.plot(x, y)
-
-for i in range(100):
-    line.set_ydata(y)
-    ax.relim()
-    ax.autoscale_view(True,True,True)
-    plt.draw()
-    y=y*1.1
-    plt.pause(0.1)
+tstart = time.time()               # for profiling
+x = arange(0,2*pi,0.01)            # x-array
+line, = plot(x,sin(x))
+for i in arange(1,200):
+    line.set_ydata(sin(x+i/10.0))  # update the data
+    draw()                         # redraw the canvas
