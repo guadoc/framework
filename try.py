@@ -1,11 +1,29 @@
-from pylab import *
+import numpy as np
 import time
+import matplotlib as mpl
+from matplotlib import pyplot as plt
+from matplotlib import pylab as plb
 
-ion()
+#   set up figure for plotting:
+fig = plt.figure()
+ax = fig.add_subplot(111)
 
-tstart = time.time()               # for profiling
-x = arange(0,2*pi,0.01)            # x-array
-line, = plot(x,sin(x))
-for i in arange(1,200):
-    line.set_ydata(sin(x+i/10.0))  # update the data
-    draw()                         # redraw the canvas
+#    plot limits
+#ax.set_xlim(-(max(q0) + bodies[-1].L), +(max(q0) + bodies[-1].L))
+#ax.set_ylim(-(max(q0) + bodies[-1].L), +(max(q0) + bodies[-1].L))
+
+#    colors
+colors = ['b', 'g', 'c']
+
+
+for i_t in range(10000):
+    x = range(i_t)
+    y = np.square(x)
+
+    ax.clear()
+    plt.hold(True)
+    #    plot limits
+    #ax.set_xlim(-(max(q0) + bodies[-1].L), +(max(q0) + bodies[-1].L))
+    #ax.set_ylim(-(max(q0) + bodies[-1].L), +(max(q0) + bodies[-1].L))
+    ax.plot(x, y)
+    plt.pause(0.0001)

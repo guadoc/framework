@@ -4,19 +4,18 @@ import numpy as np
 
 class Train:
     def __init__(self, monitor, model):
-        self.metrics = monitor.metrics(model)
-        self.train_step = tf.train.GradientDescentOptimizer(0.000001).minimize(self.metrics['loss'])
+        self.metrics = monitor.train_metrics(model)
+        self.optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.001).minimize(self.metrics[monitor.train_loss])
 
 
     def train(self, opts, monitor, dataset, model):
-
         for bat in tq.tqdm(range(monitor.n_batch)):
             batch = dataset.sample( monitor.batch_size )
-            self.train_step.run(feed_dict={model.inputs: batch['inputs'], model.labels: batch['labels']})
+            _, metrics = model.sess.run([self.optimizer, self.metrics], feed_dict={model.inputs: batch['inputs'], model.labels: batch['labels']})
+            monitor.update(metrics)
             if bat%monitor.checkpoint == 0:
-                train_loss = self.metrics['loss'].eval(feed_dict={model.inputs: batch['inputs'], model.labels: batch['labels']})
-                monitor.check_n_update(train_loss)
+                monitor.checking(metrics)
             if bat%monitor.n_batch_epoch == 0:
-                train_loss = self.metrics['loss'].eval(feed_dict={model.inputs: batch['inputs'], model.labels: batch['labels']})
+                pass
                 #test()
-                monitor.end_epoch(opts, bat, train_loss, model)
+                #monitor.end_epoch(opts, bat, metrics, model)
