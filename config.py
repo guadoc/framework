@@ -9,7 +9,7 @@ def init_config():
     parser.add_argument('-chkp',     '--checkpoint'       , default=10,            help='number of batch for each checkpoint')
     parser.add_argument('-ntrain',   '--n_data_train'     , default=1000,          help='number of data in train set')
     parser.add_argument('-nval',     '--n_data_val'       , default=1000,          help='number of data in validation set')
-    #parser.add_argument('-o', '--output-mode', action='store_true', help='enter describe mode')
+    parser.add_argument('-ex',       '--expe'             , default='./expe/',      help='file with experiments log and variables')
     #parser.add_argument('-op', '--optimizer', default=1, metavar='I', type=int, nargs='?', help='1 = ADAM, 2 = Nesterov')
     #parser.add_argument('-to', '--timeout-milliseconds', default=10000, metavar='I', type=int, nargs='?', help='timeout for each operation, in milliseconds')
     #parser.add_argument('-tt', '--training-threads', default=1, metavar='I', type=int, nargs='?', help='number of enqueuing threads for training preprocessing')

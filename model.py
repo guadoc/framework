@@ -1,5 +1,6 @@
 import tensorflow as tf
 import importlib
+import os
 #from models.baseline import create_model
 
 class Model(object):
@@ -13,7 +14,7 @@ class Model(object):
         self.saver = tf.train.Saver(max_to_keep=1000)
 
         if opts.last_epoch > 0:
-            self.model_load("./expe/"+ opts.model + "_" +str(opts.last_epoch)+".ckpt")
+            self.model_load(os.path.join(opts.expe, opts.model + "_" + str(opts.last_epoch) + ".ckpt"))
         else:
             self.sess.run(tf.global_variables_initializer())
 
@@ -26,3 +27,6 @@ class Model(object):
         print("-- Loading model from file: %s" % path)
         self.saver.restore(self.sess, path)
         print("## Model loaded from file: %s" % path)
+
+    def lr_schedule(self, monitor, bat):
+        return 0.001
