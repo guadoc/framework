@@ -15,6 +15,7 @@ class Monitor:
         self.n_batch_epoch = math.floor(opts.n_data_train / self.batch_size)
         self.n_batch= (self.n_epoch - self.last_epoch) * self.n_batch_epoch
 
+
         # validation parameters
         self.n_val_batch = 100
         self.val_batch_size = 100
@@ -22,6 +23,11 @@ class Monitor:
         #useful metrics indexes
         self.train_loss = 0
         self.norm1 = 1
+
+        #monitored metric
+        self.train_checkpoint_loss = np.zeros(opts.checkpoint)
+        self.train_epoch_cumulated_loss = 0
+        self.train_epoch_cumulated_accuracy = 0
 
         #self.saver = tf.train.Saver()
         self.save_ = None
@@ -49,6 +55,7 @@ class Monitor:
             ]
         return train_metrics
 
+
     def val_metrics(self, model):
         val_metrics = [ \
             tf.reduce_mean(tf.square(model.outputs - model.labels)), \
@@ -56,18 +63,20 @@ class Monitor:
             ]
         return val_metrics
 
-    def update(self, metrics):
-        self.plot_['train_loss'] = np.append(self.plot_['train_loss'], metrics[self.train_loss])
-        self.plot_['norm1'] = np.append(self.plot_['norm1'], metrics[self.norm1])
+
+
+    def update(self, opts, metrics, batch):
+        self.train_checkpoint_loss[batch % opts.checkpoint] = metrics[self.train_loss]
 
 
     def checking(self, metrics):
-        #self.update(metrics)
+        self.plot_['train_loss'] = np.append(self.plot_['train_loss'], np.mean(self.train_checkpoint_loss))
+        #self.plot_['norm1'] = np.append(self.plot_['norm1'], metrics[self.norm1]
         self.plot()
 
 
     def end_epoch(self, opts, bat, metrics, model):
-        print('here')
         model.model_save(os.path.join(opts.expe, opts.model + "_" + str(self.epoch) + ".ckpt"))
         print('Epoch %d, testing loss %g'%(self.epoch, metrics[1]))
+        print('patch') #for tqdm issue
         self.epoch = self.epoch + 1
