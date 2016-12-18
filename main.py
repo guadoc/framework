@@ -24,5 +24,5 @@ trainer = Train(monitor, model)
 trainer.train(opts, monitor, train_set, val_set, model)
 
 #testing
-tester = Test(model)
-tester.test(monitor, train_set, model)
+#tester = Test(model)
+#tester.test(monitor, train_set, model)
